@@ -52,25 +52,25 @@ describe('Query Caches Correctly', function() {
 
       fantastico.instance = {
         getSlave: function () {
-          return {
+          return {client: {
             GET: function (key, callback) {
               location = key;
               setTimeout(function () {
                 callback(null, null);
               }, 0);
             }
-          }
+          }}
         },
         getMaster: function () {
-          return {
-            SETEX: function (parts, callback) {
+          return {client: {
+            SETEX: function (l, t, v, callback) {
               setCalled = true;
 
-              assert(parts[0] === location);
-              assert(parts[1] === 100);
-              assert(parts[2] === '[{"where":null}]');
+              assert(l === location);
+              assert(t === 100);
+              assert(v === '[{"where":null}]');
             }
-          };
+          }};
         }
       };
 
@@ -90,20 +90,20 @@ describe('Query Caches Correctly', function() {
 
       fantastico.instance = {
         getSlave: function () {
-          return {
+          return {client: {
             GET: function (key, callback) {
               setTimeout(function () {
                 callback(null, JSON.stringify({foo: 'bar'}));
               }, 0);
             }
-          };
+          }};
         },
         getMaster: function () {
-          return {
+          return {client: {
             SETEX: function () {
               setCalled = true;
             }
-          };
+          }};
         }
       };
 
