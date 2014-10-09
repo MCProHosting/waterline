@@ -68,7 +68,7 @@ describe('Query Caches Correctly', function() {
 
               assert(l === location);
               assert(t === 100);
-              assert(v === '[{"where":null}]');
+              assert(v === '[null,[{"where":null}]]');
             }
           }};
         }
@@ -80,6 +80,7 @@ describe('Query Caches Correctly', function() {
       .exec(function(err, results) {
         assert(!err);
         assert(setCalled);
+
         assert(JSON.stringify(results) === '[{"where":null}]');
         done();
       });
@@ -93,7 +94,7 @@ describe('Query Caches Correctly', function() {
           return {client: {
             GET: function (key, callback) {
               setTimeout(function () {
-                callback(null, JSON.stringify({foo: 'bar'}));
+                callback(null, JSON.stringify([null, {foo: 'bar'}]));
               }, 0);
             }
           }};
@@ -113,6 +114,7 @@ describe('Query Caches Correctly', function() {
       .exec(function(err, results) {
         assert(!err);
         assert(!setCalled);
+
         assert(JSON.stringify(results) === '{"foo":"bar"}');
         done();
       });
