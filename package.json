@@ -27,7 +27,7 @@
     "prompt": "~0.2.12",
     "redis-fantastico": "git+https://github.com/MCProHosting/redis-fantastico",
     "waterline-criteria": "~0.11.0",
-    "waterline-schema": "~0.1.16"
+    "waterline-schema": "~0.1.17"
   },
   "devDependencies": {
     "mocha": "1.9.x",
